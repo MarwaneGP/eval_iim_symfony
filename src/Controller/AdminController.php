@@ -21,6 +21,17 @@ final class AdminController extends AbstractController
         $bus->dispatch(new AddPointsToActiveUsers());
         $this->addFlash('success', 'Points are being added to all active users.');
 
-        return $this->redirectToRoute('admin_dashboard');
+        return $this->render('admin/index.html.twig', [
+            'message' => 'Points are being added to all active users.',
+        ]);
+
+
     }
+    #[Route('/admin/products/mine', name: 'admin_my_products')]
+    public function myProducts(ProductRepository $repo, Security $security): Response
+    {
+        $products = $repo->findBy(['createdBy' => $security->getUser()]);
+        return $this->render('admin/my_products.html.twig', ['products' => $products]);
+    }
+
 }

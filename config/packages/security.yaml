@@ -39,7 +39,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/products/.*/buy, roles: ROLE_USER }
-
+        - { path: ^/register, roles: PUBLIC_ACCESS }
 when@test:
     security:
         password_hashers:

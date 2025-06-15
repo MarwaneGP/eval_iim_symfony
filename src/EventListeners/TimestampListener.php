@@ -1,26 +1,29 @@
+<?php
 namespace App\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use App\Entity\User;
-use App\Entity\Produit;
 
 class TimestampListener
 {
-    public function prePersist(LifecycleEventArgs $args): void
+    public function prePersist(PrePersistEventArgs $args): void
     {
-        $entity = $args->getEntity();
-        if ($entity instanceof User || $entity instanceof Produit) {
+        $entity = $args->getObject();
+
+        if (method_exists($entity, 'setCreatedAt') && method_exists($entity, 'setUpdatedAt')) {
             $now = new \DateTimeImmutable();
-            $entity->setCreatedAt($now);
+            if (method_exists($entity, 'getCreatedAt') && $entity->getCreatedAt() === null) {
+                $entity->setCreatedAt($now);
+            }
             $entity->setUpdatedAt($now);
         }
     }
 
     public function preUpdate(PreUpdateEventArgs $args): void
     {
-        $entity = $args->getEntity();
-        if ($entity instanceof User || $entity instanceof Produit) {
+        $entity = $args->getObject();
+
+        if (method_exists($entity, 'setUpdatedAt')) {
             $entity->setUpdatedAt(new \DateTimeImmutable());
         }
     }

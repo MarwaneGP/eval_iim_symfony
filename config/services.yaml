@@ -8,12 +8,14 @@ parameters:
 services:
     App\EventListener\TimestampListener:
         tags:
-                - { name: doctrine.event_listener, event: prePersist }
-                - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_subscriber }
     # default configuration for services in *this* file
     App\EventSubscriber\DoctrineNotificationSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.

@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Repository\ProduitRepository;
+use App\Entity\Produit;
+use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -42,7 +47,20 @@ final class ProductController extends AbstractController
 
         $user->setPoints($user->getPoints() - $produit->getPrix());
 
-        // Create a notification for admin, etc. (optional)
+        
+        $notification = new Notification();
+        $notification->setLabel(sprintf(
+            'PURCHASE | %s bought %s for %d points on %s',
+            $user->getEmail(),
+            $produit->getNom(),
+            $produit->getPrix(),
+            (new \DateTime())->format('Y-m-d H:i')
+        ));
+        $notification->setUser($user); 
+
+        $em->persist($notification);
+        $em->flush();
+
 
         $em->flush();
 
