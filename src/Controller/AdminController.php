@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Controller;
+use App\Message\AddPointsToActiveUsers;
+use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Security\Core\Security;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
 final class AdminController extends AbstractController
 {
