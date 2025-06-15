@@ -33,5 +33,15 @@ final class AdminController extends AbstractController
         $products = $repo->findBy(['createdBy' => $security->getUser()]);
         return $this->render('admin/my_products.html.twig', ['products' => $products]);
     }
+    #[Route('/admin/users', name: 'admin_user_list')]
+    public function listUsers(UserRepository $repo): Response
+    {
+        $users = $repo->findAll();
+
+        return $this->render('admin/user_list.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
 
 }

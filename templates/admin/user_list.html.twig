@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block body %}
+    <h1>Manage Users</h1>
+
+    {% for user in users %}
+        <div style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
+            <strong>{{ user.firstName }} {{ user.lastName }}</strong> ({{ user.email }})<br>
+            Status: <span style="color: {{ user.isActive ? 'green' : 'red' }}">
+                {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span><br>
+
+            <a href="{{ path('admin_user_toggle', {id: user.id}) }}" class="btn btn-sm btn-warning">
+                Toggle Activation
+            </a>
+        </div>
+    {% else %}
+        <p>No users found.</p>
+    {% endfor %}
+{% endblock %}
