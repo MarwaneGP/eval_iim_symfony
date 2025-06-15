@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+
 final class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
@@ -22,18 +23,14 @@ final class ProfileController extends AbstractController
     }
 
     #[Route('/profile/edit', name: 'profile_edit')]
-    public function edit(Request $request, Security $security, EntityManagerInterface $em): Response
+    public function edit(Request $request, EntityManagerInterface $em): Response
     {
         /** @var User $user */
-        $user = $security->getUser();
-
-        if (!$user) {
-            throw $this->createAccessDeniedException('User not logged in');
-        }
+        $user = $this->getUser();
 
         $form = $this->createFormBuilder($user)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
+            ->add('firstName')
+            ->add('lastName')
             ->getForm();
 
         $form->handleRequest($request);
@@ -41,11 +38,11 @@ final class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Profile updated.');
-            return $this->redirectToRoute('profile_edit');
         }
 
         return $this->render('profile/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
 }

@@ -4,6 +4,10 @@
 
 {% block body %}
 <h1>Edit Your Profile</h1>
+ <p>
+        <strong>First name:</strong> {{ app.user.firstName }}<br>
+        <strong>Last name:</strong> {{ app.user.lastName }}
+    </p>
 
 {{ form_start(form) }}
     {{ form_row(form.firstName) }}

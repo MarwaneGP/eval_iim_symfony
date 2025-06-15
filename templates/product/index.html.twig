@@ -8,8 +8,8 @@
 <div class="products">
     {% for product in products %}
         <div class="product">
-            <h2><a href="{{ path('product_show', {'id': product.id}) }}">{{ product.nom }}</a></h2>
-            <p>{{ 'product.price'|trans }}: {{ product.prix }} pts</p>
+            <h2><a href="{{ path('product_show', {'id': product.id}) }}">{{ product.name }}</a></h2>
+            <p>{{ 'product.price'|trans }}: {{ product.price }} pts</p>
             <p>{{ product.description }}</p>
         </div>
     {% else %}

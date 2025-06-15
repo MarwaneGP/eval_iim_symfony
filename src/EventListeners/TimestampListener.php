@@ -1,5 +1,5 @@
 <?php
-namespace App\EventListener;
+namespace App\EventListeners;
 
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
